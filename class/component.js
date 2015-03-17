@@ -122,11 +122,10 @@ var ComponentGenerator = Class.extend({
 
         // make sure the <component>/index.js exist
         utils.createIndexFile(this, '../component', targetDir);
-
-        this.template('index.js', path.join(targetDir, this[_templateFolder + 'name'] + '.js'));
-        this.template('index.test.js', path.join(targetDir, this[_templateFolder + 'name'] + '.test.js'));
+        var filename = this.getFilename(this[_templateFolder + 'name']);
+        this.template('index.js', path.join(targetDir, filename + '.js'));
+        this.template('index.test.js', path.join(targetDir, filename + '.test.js'));
         done();
-
     }
 
 });

@@ -186,6 +186,20 @@ var ClassGenerator = Base.extend({
     },
 
     /**
+     * Get the filename with the correct case
+     * @param {String} filename - The original filename
+     *
+     * @returns {String} - A filename with the correct case
+     */
+    getFilename: function(filename) {
+        var filenameCase = this.config.get('filenameCase') || 'camel';
+        if(filenameCase === 'snake') {
+            return this._.dasherize(filename);
+        }
+        return filename;
+    },
+
+    /**
      * Get the list of directories given a path (Promise)
      * @param {String} dirPath - The path to start looking for sub directories
      *
