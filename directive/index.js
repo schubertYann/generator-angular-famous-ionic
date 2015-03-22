@@ -41,12 +41,15 @@ var DirectiveGenerator = Class.extend({
     writing: function() {
         var done = this.async();
         this.sourceRoot(path.join(__dirname, '../templates/' + 'directive'));
-        var targetDir = path.join(this.clientFolder, 'scripts', this.modulename, 'directives');
+        var targetDir = path.join(this.clientFolder, 'scripts', this.moduleFolder, 'directives');
         this.mkdir(targetDir);
 
         // make sure the fitlers/index.js exist
         utils.createIndexFile(this, '../component', targetDir);
-        var filename = this.getFilename(this.directivename);
+        var filename = this.casify(this.directivename);
+        if(this.options['component-type-suffix']) {
+            filename = filename + '.directive';
+        }
 
         if(this.compile === true || this.compile === 'true') {
             this.template('index-compile.js', path.join(targetDir, filename + '.js'));

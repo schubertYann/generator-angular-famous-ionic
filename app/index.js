@@ -24,8 +24,9 @@ var AppGenerator = Class.extend({
             type: 'Boolean',
             defaults: false
         });
+
         this.appname = this.appname || path.basename(process.cwd());
-        this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
+        this.appname = this.camelize(this.appname);
 
     },
 

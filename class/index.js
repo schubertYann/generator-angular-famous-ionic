@@ -59,6 +59,12 @@ var ClassGenerator = Base.extend({
             type: 'Boolean',
             defaults: false
         });
+
+        this.option('component-type-suffix', {
+            desc: 'Asks to build the app with component type suffixes',
+            type: 'Boolean',
+            defaults: false
+        });
     },
 
     /**
@@ -186,17 +192,38 @@ var ClassGenerator = Base.extend({
     },
 
     /**
-     * Get the filename with the correct case
-     * @param {String} filename - The original filename
+     * Clean & dasherize a string
+     * @param {String} str - The original string
      *
-     * @returns {String} - A filename with the correct case
+     * @returns {String} - The dasherized string
      */
-    getFilename: function(filename) {
+    dasherize: function(str) {
+        return this._.dasherize(this._.camelize(this._.slugify(this._.humanize(str))));
+    },
+
+    /**
+     * Clean & camelize a string
+     * @param {String} str - The original string
+     *
+     * @returns {String} - The camelized string
+     */
+    camelize: function(str) {
+        return this._.camelize(this._.slugify(this._.humanize(str)));
+    },
+
+    /**
+     * Get the string back with the correct file casing as defined by filenameCase
+     * @param {String} str - The original string
+     *
+     * @returns {String} - A string with the correct casing (i.e. camelCase, snake-case)
+     */
+    casify: function(str) {
         var filenameCase = this.config.get('filenameCase') || 'camel';
+        str = this.camelize(str);
         if(filenameCase === 'snake') {
-            return this._.dasherize(filename);
+            return this.dasherize(str);
         }
-        return filename;
+        return str;
     },
 
     /**
